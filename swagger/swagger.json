@@ -1,0 +1,536 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "This is a sample server store server. \n\n[Learn about Swagger](<a href='http://swagger.io'>http://swagger.io</a>) or join the IRC channel  '#swagger' on irc.freenode.net.\n\nFor this sample, you can use the api key 'special-key' to test the authorization filters",
+    "version" : "1.0.0",
+    "title" : "coc API",
+    "contact" : { },
+    "license" : {
+      "name" : "Apache 2.0",
+      "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "host" : "virtserver.swaggerhub.com",
+  "basePath" : "/D4U/COCAPI/1.0.0",
+  "tags" : [ {
+    "name" : "Product",
+    "description" : "Operations about Product"
+  }, {
+    "name" : "Store",
+    "description" : "Operations about store"
+  }, {
+    "name" : "User",
+    "description" : "Operations about user"
+  } ],
+  "schemes" : [ "https" ],
+  "paths" : {
+    "/Product" : {
+      "get" : {
+        "tags" : [ "Product" ],
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "Status 200"
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Products" ],
+        "summary" : "Add a new Product to the store",
+        "operationId" : "addProduct",
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "Success"
+          },
+          "405" : {
+            "description" : "Status 405"
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "Product" ],
+        "summary" : "Update an existing Product",
+        "operationId" : "updateProduct",
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "Success"
+          },
+          "400" : {
+            "description" : "Status 400"
+          },
+          "404" : {
+            "description" : "Status 404"
+          },
+          "405" : {
+            "description" : "Status 405"
+          }
+        }
+      }
+    },
+    "/Product/findByStatus" : {
+      "get" : {
+        "tags" : [ "Product" ],
+        "summary" : "Finds Product by status",
+        "description" : "Multiple status values can be provided with comma separated strings",
+        "operationId" : "findProductsByStatus",
+        "parameters" : [ {
+          "name" : "status",
+          "in" : "query",
+          "description" : "Status values that need to be considered for filter",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success"
+          },
+          "400" : {
+            "description" : "Status 400"
+          }
+        }
+      }
+    },
+    "/Product/findByTags" : {
+      "get" : {
+        "tags" : [ "Product" ],
+        "summary" : "Finds Products by tags",
+        "description" : "Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.",
+        "operationId" : "findProductsByTags",
+        "parameters" : [ {
+          "name" : "tags",
+          "in" : "query",
+          "description" : "Tags to filter by",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success"
+          },
+          "400" : {
+            "description" : "Status 400"
+          }
+        }
+      }
+    },
+    "/Product/{ProductId}" : {
+      "get" : {
+        "tags" : [ "Product" ],
+        "summary" : "Find Product by ID",
+        "description" : "Returns a single Product",
+        "operationId" : "getProductById",
+        "parameters" : [ {
+          "name" : "ProductId",
+          "in" : "path",
+          "description" : "ID of Product that needs to be fetched",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success"
+          },
+          "400" : {
+            "description" : "Status 400"
+          },
+          "404" : {
+            "description" : "Status 404"
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Product" ],
+        "summary" : "Updates a Product in the store with form data",
+        "operationId" : "updateProductWithForm",
+        "parameters" : [ {
+          "name" : "ProductId",
+          "in" : "path",
+          "description" : "ID of Product that needs to be fetched",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success"
+          },
+          "405" : {
+            "description" : "Status 405"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "Product" ],
+        "summary" : "Deletes a Product",
+        "operationId" : "deleteProduct",
+        "parameters" : [ {
+          "name" : "ProductId",
+          "in" : "path",
+          "description" : "ID of Product that needs to be fetched",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success"
+          },
+          "400" : {
+            "description" : "Status 400"
+          }
+        }
+      }
+    },
+    "/store/order" : {
+      "post" : {
+        "tags" : [ "Store" ],
+        "summary" : "Place an order for a Product",
+        "operationId" : "placeOrder",
+        "consumes" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/Order"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success"
+          },
+          "400" : {
+            "description" : "Status 400"
+          }
+        }
+      }
+    },
+    "/store/order/{orderId}" : {
+      "get" : {
+        "tags" : [ "Store" ],
+        "summary" : "Find purchase order by ID",
+        "description" : "For valid response try integer IDs with value >= 1 and <= 10. Other values will generated exceptions",
+        "operationId" : "getOrderById",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "orderId",
+          "in" : "path",
+          "description" : "ID of the order that needs to be deleted",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "schema" : {
+              "$ref" : "#/definitions/Order"
+            }
+          },
+          "400" : {
+            "description" : "Status 400"
+          },
+          "404" : {
+            "description" : "Status 404"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "Store" ],
+        "summary" : "Delete purchase order by ID",
+        "description" : "For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors",
+        "operationId" : "deleteOrder",
+        "parameters" : [ {
+          "name" : "orderId",
+          "in" : "path",
+          "description" : "ID of the order that needs to be deleted",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success"
+          },
+          "400" : {
+            "description" : "Status 400"
+          },
+          "404" : {
+            "description" : "Status 404"
+          }
+        }
+      }
+    },
+    "/user" : {
+      "post" : {
+        "tags" : [ "User" ],
+        "summary" : "Create user",
+        "description" : "This can only be done by the logged in user.",
+        "operationId" : "createUser",
+        "consumes" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/User"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success"
+          }
+        }
+      }
+    },
+    "/user/createWithArray" : {
+      "post" : {
+        "tags" : [ "User" ],
+        "summary" : "Creates list of users with given input array",
+        "operationId" : "createUsersWithArrayInput",
+        "consumes" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/definitions/User"
+            }
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success"
+          }
+        }
+      }
+    },
+    "/user/createWithList" : {
+      "post" : {
+        "tags" : [ "User" ],
+        "summary" : "Creates list of users with given list input",
+        "operationId" : "createUsersWithListInput",
+        "consumes" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/definitions/User"
+            }
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success"
+          }
+        }
+      }
+    },
+    "/user/{userlogin}" : {
+      "get" : {
+        "tags" : [ "User" ],
+        "summary" : "Get user by user name",
+        "operationId" : "getUserByName",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "userlogin",
+          "in" : "path",
+          "description" : "name that need to be deleted",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "schema" : {
+              "$ref" : "#/definitions/User"
+            }
+          },
+          "400" : {
+            "description" : "Status 400"
+          },
+          "404" : {
+            "description" : "Status 404"
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "User" ],
+        "summary" : "Updated user",
+        "description" : "This can only be done by the logged in user.",
+        "operationId" : "updateUser",
+        "consumes" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "userlogin",
+          "in" : "path",
+          "description" : "name that need to be deleted",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/User"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success"
+          },
+          "400" : {
+            "description" : "Status 400"
+          },
+          "404" : {
+            "description" : "Status 404"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "User" ],
+        "summary" : "Delete user",
+        "description" : "This can only be done by the logged in user.",
+        "operationId" : "deleteUser",
+        "parameters" : [ {
+          "name" : "userlogin",
+          "in" : "path",
+          "description" : "name that need to be deleted",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success"
+          },
+          "400" : {
+            "description" : "Status 400"
+          },
+          "404" : {
+            "description" : "Status 404"
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "Tag" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "name" : {
+          "type" : "string"
+        }
+      }
+    },
+    "Category" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "name" : {
+          "type" : "string"
+        }
+      }
+    },
+    "Product" : {
+      "type" : "object",
+      "required" : [ "id", "name" ],
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int32",
+          "description" : "unique identifier for the Product"
+        },
+        "category" : {
+          "$ref" : "#/definitions/Category"
+        },
+        "name" : {
+          "type" : "string"
+        },
+        "photoUrls" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "tags" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/Tag"
+          }
+        },
+        "status" : {
+          "type" : "string",
+          "description" : "Product status in the store"
+        }
+      }
+    },
+    "Order" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "ProductId" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "quantity" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "status" : {
+          "type" : "string",
+          "description" : "Order Status"
+        },
+        "shipDate" : {
+          "type" : "string"
+        }
+      }
+    },
+    "User" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "firstName" : {
+          "type" : "string"
+        },
+        "userlogin" : {
+          "type" : "string"
+        },
+        "lastName" : {
+          "type" : "string"
+        },
+        "email" : {
+          "type" : "string"
+        },
+        "password" : {
+          "type" : "string"
+        },
+        "phone" : {
+          "type" : "string"
+        },
+        "userStatus" : {
+          "type" : "integer",
+          "format" : "int32",
+          "description" : "User Status"
+        }
+      }
+    }
+  }
+}
